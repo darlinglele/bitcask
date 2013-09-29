@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    scanForTestClasses = false
+}
+
+project.ext {
+    junitVersion = '4.10'
+}
+dependencies {
+    testCompile(
+            "junit:junit:$junitVersion"
+    )
+
+}
