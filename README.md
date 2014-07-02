@@ -2,7 +2,7 @@ Bitcask简洁、优雅的key/value存储引擎
 ==========
 在关系数据库存储上，Btree一直是主角，但在某些情况下，log(n)的读写操作并不是总是让人满意。 Bitcask是一种连续写入很快速的Key/Value数据存储结构，读写操作的时间复杂度均为常量。
 
-####BitCask连续写入操作
+####Bitcask连续写入操作
 Bitcask具有高效的连续写入操作，连续写操作类似向log文件追加记录，因此Bitcask也被称作是日志结构存储。
 
 Bitcask将存储对象的key、value分别存储：
@@ -27,14 +27,14 @@ Size是Value所占的磁盘大小，单位是Byte
 *   [Key: Bill, Filename: employee.db, Offset:146, Size:150, ModifiedDate:5489354345]
 *   [Key: Jobs, Filename: employee.db, Offset:294, Size:136, ModifiedDate:948965443] 
 
-####BitCask随机读取操作
+####Bitcask随机读取操作
 
 由于数据在内存当中使用HashMap作为索引，查找索引的时间为常量，比如查找Bill，直接通过Key就可以找到它的索引信息，再根据索引信息，找到value在文件位置和大小，精确读取出bytes，反序列化成value对象。 当然在value存入文件时需要序列化内存对象成bytes。磁盘读取的过程的时间复杂度也是常量， 并不会随时数据的增大而增大。
 
-####BitCask 数据删除和更新
+####Bitcask 数据删除和更新
 一条记录包含了索引和数据两个部分,删除索引容易，但要彻底的删除数据不是件容易的事情（不讨论，参考磁盘空间整理）。对于更新数据，Bitcask通常采用的策略是append一条新数据，并更新已有的索引，至于旧数据则在清理数据的时候把它删除掉。  
 
-####BitCask适合的场景
+####Bitcask适合的场景
 *   适合连续写入，随机的读取，连续读取性能不如Btree；
 *   记录的key可以完全的载入内存；
 *   value的大小比key大很多,否则意义不大；
